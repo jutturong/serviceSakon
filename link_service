@@ -1,0 +1,9 @@
+ข้อมูลส่ วนบุคคล
+http://203.157.177.121/nusoap/testClientJSON.php?function=person&strDatatype=json&strCID=3471201545502
+
+
+service
+http://203.157.177.121/nusoap/ServerSide.php?wsdl
+call service
+http://203.157.177.121/nusoap/ClientSide.php
+
