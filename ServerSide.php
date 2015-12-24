@@ -59,13 +59,24 @@ ini_set('date.timezone', 'Asia/Bangkok');
               'txtPassword'=>"xsd:string",
           );
           
+          #function person($strUsername,$strPassword,$strDatatype,$strCID)
+          $person_varname=array(
+                'strUsername'=>"xsd:string",
+                'strPassword'=>"xsd:string",
+                'strDatatype'=>"xsd:string",
+                'strCID'=>"xsd:string",
+            );
+
                   
-		$server->register('HelloWorld',$varname, array('return' => 'xsd:string'));
-		$server->register('bmi',$callbmi, array('return' => 'xsd:string'));
+		            $server->register('HelloWorld',$varname, array('return' => 'xsd:string'));
+		            $server->register('bmi',$callbmi, array('return' => 'xsd:string'));
                 $server->register('bmi2',$bmi_varname, array('return' => 'xsd:string'));
                 $server->register('check_user',$check_user_varname, array('return' => 'xsd:string'));
                 $server->register('json_authen',$check_user_varname, array('return' => 'xsd:string'));
                 $server->register('user_type',$user_type_varname, array('return' => 'xsd:string'));
+                $server->register('person',$person_varname, array('return' => 'xsd:string'));
+
+            
                 
                 				 
         function HelloWorld($strName,$strEmail)
@@ -268,6 +279,50 @@ ini_set('date.timezone', 'Asia/Bangkok');
                                                                                  
                                                                                         
 		}
+
+
+    function person($strUsername,$strPassword,$strDatatype,$strCID)
+    {
+           global $database_hdc,$hdc;
+           $_return='Error incorrect username or password';
+           $user_level = check_user($strUsername,$strPassword);
+             $rows=array();
+           if ($user_level>0)
+          {
+                 mysql_select_db($database_hdc,$hdc);
+                  $query_person="SELECT distinct(p.cid),concat(pname.PRENAME,p.NAME)as name, p.LNAME,p.BIRTH, p.ABOGROUP,concat(h.HOUSE,' ','หมู่','  ',h.VILLAGE,' ','บ้าน',v2.villagename,' ','ต.',cs.subdistname,' ','อ.',c.distname,' ','จ. ',cc.changwatname)as address ,if(SEX=1,'ชาย','หญิง') as SEX, (year(CURDATE())-year(p.BIRTH)) as AGE
+                    FROM hdc.person p 
+                     left JOIN hdc.cprename pname on p.PRENAME=pname.id_prename  
+                    LEFT JOIN hdc.home h on h.HID=p.HID  and h.HOSPCODE=p.HOSPCODE  
+                    LEFT JOIN hdc.cvillage v2 on v2.villagecodefull=CONCAT(h.CHANGWAT,h.AMPUR,h.TAMBON,h.VILLAGE)  
+                    LEFT JOIN hdc.co_district c on c.distid=v2.ampurcode
+                    LEFT JOIN hdc.co_subdistrict cs on cs.subdistid=v2.tamboncode
+                    LEFT JOIN hdc.cchangwat cc on cc.changwatcode=v2.changwatcode
+                    where p.TYPEAREA In('1','3') and p.HID not in('1','00000') and p.cid='$strCID'";
+                    $rs_person=mysql_query($query_person);
+                    while($row=  mysql_fetch_assoc( $rs_person ))
+                     {
+                                                                     
+                          $rows["cid"]=$row["cid"];
+                          $rows["name"]=$row["name"];
+                          $rows["LNAME"]=$row["LNAME"];
+                          $rows["BIRTH"]=$row["BIRTH"];
+                          $rows["ABOGROUP"]=$row["ABOGROUP"];
+                          $rows["address"]=$row["address"];
+                          $rows["SEX"]=$row["SEX"];
+                          $rows["AGE"]=$row["AGE"];
+                      }
+                                                                
+                          mysql_free_result($rs_person);
+                          header('Content-type: application/json');
+                           return json_encode($rows);
+
+          }
+
+
+    }
+
+
 
 
 
