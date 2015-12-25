@@ -102,6 +102,32 @@
    echo "<br>";
   $data7=$client->call("person",$person_type_varname);
   echo $data7;
+
+  #http://203.157.177.121/nusoap/testClientJSON.php?function=drugallergy&strDatatype=json&strCID=3470100253904
+  /*
+            $drugallergy_varname=array(
+                'strUsername'=>"xsd:string",
+                'strPassword'=>"xsd:string",
+                'strDatatype'=>"xsd:string",
+                'strCID'=>"xsd:string",
+            );
+*/
+
+  $drugallergy_varname=array(
+         'strUsername' => "ict",
+         'strPassword' => "skko",
+         'strDatatype'=>"json",
+         'strCID'=>"3471201545502",
+    );
+
+   echo "<hr>";
+   echo  "ประวัติแพ้ยา";
+   echo "<br>";
+  $data8=$client->call("person",$drugallergy_varname);
+  echo $data8;
+
+
+
 ?>
 </body>
 </html>
