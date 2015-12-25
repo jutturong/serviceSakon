@@ -128,6 +128,22 @@
 
 
 
+//http://203.157.177.121/nusoap/testClientJSON.php?function=chronic&strDatatype=json&strCID=3470100391002
+        $chronic_varname = array(
+                  'strUsername' => "ict",
+                  'strPassword' => "skko",
+                  'strDatatype'=>"json",
+                  'strCID'=>"3471201545502",
+        );
+   echo "<hr>";
+   echo  "โรคประจำตัว";
+   echo "<br>";
+  $data9=$client->call("chronic",$chronic_varname);
+  echo $data9;
+
+
+
+
 ?>
 </body>
 </html>
