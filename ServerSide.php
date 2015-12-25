@@ -67,6 +67,14 @@ ini_set('date.timezone', 'Asia/Bangkok');
                 'strCID'=>"xsd:string",
             );
 
+          #function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
+          $drugallergy_varname=array(
+                'strUsername'=>"xsd:string",
+                'strPassword'=>"xsd:string",
+                'strDatatype'=>"xsd:string",
+                'strCID'=>"xsd:string",
+            );
+
                   
 		            $server->register('HelloWorld',$varname, array('return' => 'xsd:string'));
 		            $server->register('bmi',$callbmi, array('return' => 'xsd:string'));
@@ -75,7 +83,7 @@ ini_set('date.timezone', 'Asia/Bangkok');
                 $server->register('json_authen',$check_user_varname, array('return' => 'xsd:string'));
                 $server->register('user_type',$user_type_varname, array('return' => 'xsd:string'));
                 $server->register('person',$person_varname, array('return' => 'xsd:string'));
-
+                $server->register('drugallergy',$drugallergy_varname, array('return' => 'xsd:string'));
             
                 
                 				 
@@ -323,7 +331,59 @@ ini_set('date.timezone', 'Asia/Bangkok');
     }
 
 
+function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
+    {
+          global $database_hdc,$hdc;
+          $_return='Error incorrect username or password';
+          $user_level = check_user($strUsername,$strPassword);
+          $rows=array();
+          if ($user_level>0)
+          {
+               mysql_select_db($database_hdc,$hdc);
+               $query_drugallergy="SELECT drugallergy.HOSPCODE, drugallergy.DNAME,calevel.ALEVEL, co_office.off_name FROM (drugallergy INNER JOIN person ON (drugallergy.PID = person.PID) AND (drugallergy.HOSPCODE = person.HOSPCODE)) INNER JOIN co_office ON drugallergy.HOSPCODE = co_office.off_id INNER JOIN calevel ON calevel.id_alevel=drugallergy.ALEVEL WHERE person.cid='$strCID' ORDER BY drugallergy.DATERECORD DESC";
+               $rs_drugallergy=mysql_query($query_drugallergy);
+               while ($row_drugallergy=mysql_fetch_assoc($rs_drugallergy))
+               {
+                     // array_push($a_return,$row_drugallergy);
+                      $rows["record"]=$row["record"];
+               }
 
+                     mysql_free_result($rs_person);
+                    header('Content-type: application/json');
+                    return json_encode($rows);
+
+          }
+    }
+
+/*
+function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
+    {
+      global $database_hdc,$hdc;
+      $_return='Error incorrect username or password';
+      $user_level = check_user($strUsername,$strPassword);
+      $a_return=array();
+      if ($user_level>0){
+        mysql_select_db($database_hdc,$hdc);
+        $query_drugallergy="SELECT drugallergy.HOSPCODE, drugallergy.DNAME,calevel.ALEVEL, co_office.off_name FROM (drugallergy INNER JOIN person ON (drugallergy.PID = person.PID) AND (drugallergy.HOSPCODE = person.HOSPCODE)) INNER JOIN co_office ON drugallergy.HOSPCODE = co_office.off_id INNER JOIN calevel ON calevel.id_alevel=drugallergy.ALEVEL WHERE person.cid='$strCID' ORDER BY drugallergy.DATERECORD DESC";
+        $rs_drugallergy=mysql_query($query_drugallergy);
+        while ($row_drugallergy=mysql_fetch_assoc($rs_drugallergy)){
+          array_push($a_return,$row_drugallergy);
+        }
+        if (count($a_return)>0){
+          $_return=json_encode($a_return);
+        }else{
+          if ($rs_drugallergy){
+            $_return="No data<br>".$query_drugallergy;
+          }else{
+            $_return="Query Error<br>".$query_drugallergy;
+          }
+        }
+        mysql_free_result($rs_drugallergy);
+      }
+      //      return $_return;
+      return (strtolower($strDatatype)=="json")?json_encode($a_return):arrayToXML($a_return);
+    }
+*/
 
 
 
