@@ -6,9 +6,13 @@ http://203.157.177.121/nusoap/testClientJSON.php?function=person&strDatatype=jso
 http://203.157.177.121/nusoap/webtest_link_re
 direct.php?id=13
 
+http://203.157.177.121/nusoap/testClientJSON.php?function=chronic&strDatatype=json&strCID=3470100391002
+
 ประวัติแพ้ยา
 http://203.157.177.121/nusoap/webtest_link_re
 direct.php?id=14
+
+http://203.157.177.121/nusoap/testClientJSON.php?function=drugallergy&strDatatype=json&strCID=3470100253904
 
 
 
