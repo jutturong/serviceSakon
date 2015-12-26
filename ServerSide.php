@@ -386,18 +386,32 @@ function chronic($strUsername,$strPassword,$strDatatype,$strCID)
       if ($user_level>0)
       {
         mysql_select_db($database_hdc,$hdc);
+
+/*
         $query_chronic="SELECT  co.off_name,cc.tchronic from person p
+          INNER JOIN chronic c on p.pid=c.pid and p.HOSPCODE=c.hospcode
+          INNER JOIN cchronic cc ON c.CHRONIC = cc.id_chronic
+          LEFT JOIN co_office co on co.off_id=c.HOSPCODE
+          where p.cid='3470100391002'
+          GROUP BY c.HOSPCODE, c.PID, cc.tchronic";
+*/
+
+          $query_chronic="SELECT  co.off_name,cc.tchronic from person p
           INNER JOIN chronic c on p.pid=c.pid and p.HOSPCODE=c.hospcode
           INNER JOIN cchronic cc ON c.CHRONIC = cc.id_chronic
           LEFT JOIN co_office co on co.off_id=c.HOSPCODE
           where p.cid='$strCID'
           GROUP BY c.HOSPCODE, c.PID, cc.tchronic";
+
+
         $rs_chronic=mysql_query($query_chronic);
         while ($row_chronic=mysql_fetch_assoc($rs_chronic))
         {
-             $rows["record"]=$row["record"];
-             $rows["off_name"]=$row["off_name"];
-             $rows["tchronic"]=$row["tchronic"];                   
+            //$rows[]=$row_chronic;
+ 
+              $rows["off_name"]=$row["off_name"];
+              $rows["tchronic"]=$row["tchronic"]; 
+                                    
         }
                     mysql_free_result($rs_chronic);
                     header('Content-type: application/json');
