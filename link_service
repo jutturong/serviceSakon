@@ -8,12 +8,25 @@ direct.php?id=13
 
 http://203.157.177.121/nusoap/testClientJSON.php?function=chronic&strDatatype=json&strCID=3470100391002
 
+
+SELECT  co.off_name,cc.tchronic from person p
+          INNER JOIN chronic c on p.pid=c.pid and p.HOSPCODE=c.hospcode
+          INNER JOIN cchronic cc ON c.CHRONIC = cc.id_chronic
+          LEFT JOIN co_office co on co.off_id=c.HOSPCODE
+          where p.cid='3470100391002'
+          GROUP BY c.HOSPCODE, c.PID, cc.tchronic
+
+
+
+
 ประวัติแพ้ยา
 http://203.157.177.121/nusoap/webtest_link_re
 direct.php?id=14
 
 http://203.157.177.121/nusoap/testClientJSON.php?function=drugallergy&strDatatype=json&strCID=3470100253904
 
+ตัวอย่าง loop table ประวัติการแพ้ยา
+http://www.thaicreate.com/mobile/android-arrayadapter-example.html
 
 
 service
