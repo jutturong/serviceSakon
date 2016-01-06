@@ -123,7 +123,7 @@
    echo "<hr>";
    echo  "ประวัติแพ้ยา";
    echo "<br>";
-  $data8=$client->call("person",$drugallergy_varname);
+  $data8=$client->call("drugallergy",$drugallergy_varname);
   echo $data8;
 
 
