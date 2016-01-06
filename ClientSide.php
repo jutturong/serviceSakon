@@ -117,13 +117,14 @@
          'strUsername' => "ict",
          'strPassword' => "skko",
          'strDatatype'=>"json",
-         'strCID'=>"3471201545502",
+         'strCID'=>"3470100253904",
     );
 
    echo "<hr>";
    echo  "ประวัติแพ้ยา";
    echo "<br>";
-  $data8=$client->call("drugallergy",$drugallergy_varname);
+  //$data8=$client->call("drugallergy",$drugallergy_varname);
+   $data8=$client->call("person",$drugallergy_varname);
   echo $data8;
 
 
