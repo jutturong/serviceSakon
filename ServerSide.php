@@ -357,6 +357,7 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
           {
                mysql_select_db($database_hdc,$hdc);
                $query_drugallergy="SELECT drugallergy.HOSPCODE, drugallergy.DNAME,calevel.ALEVEL, co_office.off_name FROM (drugallergy INNER JOIN person ON (drugallergy.PID = person.PID) AND (drugallergy.HOSPCODE = person.HOSPCODE)) INNER JOIN co_office ON drugallergy.HOSPCODE = co_office.off_id INNER JOIN calevel ON calevel.id_alevel=drugallergy.ALEVEL WHERE person.cid='$strCID' ORDER BY drugallergy.DATERECORD DESC";
+              // $query_drugallergy="SELECT * FROM (drugallergy INNER JOIN person ON (drugallergy.PID = person.PID) AND (drugallergy.HOSPCODE = person.HOSPCODE)) INNER JOIN co_office ON drugallergy.HOSPCODE = co_office.off_id INNER JOIN calevel ON calevel.id_alevel=drugallergy.ALEVEL WHERE person.cid='$strCID' ORDER BY drugallergy.DATERECORD DESC";
                $rs_drugallergy=mysql_query($query_drugallergy);
                while ($row_drugallergy=mysql_fetch_assoc($rs_drugallergy))
                {
@@ -372,6 +373,10 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
                     // $rows[]=$row_drugallergy;
 
                       /*
+
+                      SELECT * FROM `drugallergy` 
+
+
                       HOSPCODE
 
 PID
@@ -395,7 +400,7 @@ INFORMHOSP
 D_UPDATE
 */
 
-                      $rows["DNAME"]=$row["DNAME"];
+                  $rows[]=$row_drugallergy;   
                             
                }
 
