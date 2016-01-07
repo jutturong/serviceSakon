@@ -369,7 +369,9 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
                       $rows["ALEVEL"]=$row["ALEVEL"];
                       $rows["off_name"]=$row["off_name"];
                       */
-                     $rows[]=$row_drugallergy;
+                    // $rows[]=$row_drugallergy;
+
+                      $rows["HOSPCODE"]=$row["HOSPCODE"];
 
 
                             
