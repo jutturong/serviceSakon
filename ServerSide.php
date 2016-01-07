@@ -362,22 +362,21 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
                while ($row_drugallergy=mysql_fetch_assoc($rs_drugallergy))
                {
 
-                /*
-                     
+                      /*                   
                       $rows["record"]=$row["record"];
                       $rows["HOSPCODE"]=$row["HOSPCODE"];
                      
                       $rows["ALEVEL"]=$row["ALEVEL"];
                       $rows["off_name"]=$row["off_name"];
                       */
-                    // $rows[]=$row_drugallergy;
+                  
 
                       /*
 
-                      SELECT * FROM `drugallergy` 
+  SELECT * FROM `drugallergy` 
 
 
-                      HOSPCODE
+  HOSPCODE
 
 PID
 
@@ -400,7 +399,13 @@ INFORMHOSP
 D_UPDATE
 */
 
-                  $rows[]=$row_drugallergy;   
+                //  $rows[]=$row_drugallergy;   
+
+                  $rows["record"]=$row_drugallergy["record"];
+                  $rows["HOSPCODE"]=$row_drugallergy["HOSPCODE"];
+                  $rows["ALEVEL"]=$row_drugallergy["ALEVEL"];
+                  $rows["off_name"]=$row_drugallergy["off_name"];
+
                             
                }
 
