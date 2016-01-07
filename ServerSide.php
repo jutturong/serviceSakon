@@ -365,15 +365,37 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
                      
                       $rows["record"]=$row["record"];
                       $rows["HOSPCODE"]=$row["HOSPCODE"];
-                      $rows["DNAME"]=$row["DNAME"];
+                     
                       $rows["ALEVEL"]=$row["ALEVEL"];
                       $rows["off_name"]=$row["off_name"];
                       */
                     // $rows[]=$row_drugallergy;
 
-                      $rows["HOSPCODE"]=$row["HOSPCODE"];
+                      /*
+                      HOSPCODE
 
+PID
 
+DATERECORD
+
+DRUGALLERGY
+
+DNAME
+
+TYPEDX
+
+ALEVEL
+
+SYMPTOM
+
+INFORMANT
+
+INFORMHOSP
+
+D_UPDATE
+*/
+
+                      $rows["DNAME"]=$row["DNAME"];
                             
                }
 
