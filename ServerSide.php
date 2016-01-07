@@ -360,12 +360,18 @@ function drugallergy($strUsername,$strPassword,$strDatatype,$strCID)
                $rs_drugallergy=mysql_query($query_drugallergy);
                while ($row_drugallergy=mysql_fetch_assoc($rs_drugallergy))
                {
+
+                /*
                      
                       $rows["record"]=$row["record"];
                       $rows["HOSPCODE"]=$row["HOSPCODE"];
                       $rows["DNAME"]=$row["DNAME"];
                       $rows["ALEVEL"]=$row["ALEVEL"];
                       $rows["off_name"]=$row["off_name"];
+                      */
+                     $rows[]=$row_drugallergy;
+
+
                             
                }
 
