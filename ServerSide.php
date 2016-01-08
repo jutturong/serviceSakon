@@ -449,8 +449,8 @@ function chronic($strUsername,$strPassword,$strDatatype,$strCID)
         {
             //$rows[]=$row_chronic;
  
-              $rows["off_name"]=$row["off_name"];
-              $rows["tchronic"]=$row["tchronic"]; 
+              $rows["off_name"]=$row_chronic["off_name"];
+              $rows["tchronic"]=$row_chronic["tchronic"]; 
                                     
         }
                     mysql_free_result($rs_chronic);
