@@ -447,10 +447,10 @@ function chronic($strUsername,$strPassword,$strDatatype,$strCID)
         $rs_chronic=mysql_query($query_chronic);
         while ($row_chronic=mysql_fetch_assoc($rs_chronic))
         {
-            //$rows[]=$row_chronic;
+                 $rows[]=$row_chronic;
  
-              $rows["off_name"]=$row_chronic["off_name"];
-              $rows["tchronic"]=$row_chronic["tchronic"]; 
+            //  $rows["off_name"]=$row_chronic["off_name"];
+            //  $rows["tchronic"]=$row_chronic["tchronic"]; 
                                     
         }
                     mysql_free_result($rs_chronic);
