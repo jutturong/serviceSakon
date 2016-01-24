@@ -86,6 +86,13 @@ ini_set('date.timezone', 'Asia/Bangkok');
                    'strCID' => "xsd:string"
         );
 
+        #function ncdscreen($strUsername,$strPassword,$strDatatype,$strCID)
+        $ncdscreen_varname = array(
+                   'strUsername' => "xsd:string",
+                   'strPassword' => "xsd:string",
+                   'strDatatype'=>"xsd:string",
+                   'strCID' => "xsd:string"
+        );
 
 
                   
@@ -98,7 +105,7 @@ ini_set('date.timezone', 'Asia/Bangkok');
                 $server->register('person',$person_varname, array('return' => 'xsd:string'));
                 $server->register('drugallergy',$drugallergy_varname, array('return' => 'xsd:string'));
                 $server->register('chronic',$chronic_varname, array('return' => 'xsd:string'));
-
+                $server->register('ncdscreen',$ncdscreen_varname, array('return' => 'xsd:string'));
 
 
 
@@ -460,12 +467,29 @@ function chronic($strUsername,$strPassword,$strDatatype,$strCID)
     }  
 
 
-    
+function ncdscreen($strUsername,$strPassword,$strDatatype,$strCID)
+    {
+        global $database_hdc,$hdc;
+        $_return='Error incorrect username or password';
+        $user_level = check_user($strUsername,$strPassword);
+        $rows=array();
+        if ($user_level>0)
+        {
+            mysql_select_db($database_hdc,$hdc);
+            $query_ncdscreen="SELECT p.cid,n.DATE_SERV,n.HOSPCODE,co.off_name,n.WEIGHT,n.HEIGHT,n.SBP_1,n.DBP_1,n.BSLEVEL FROM ncdscreen n  LEFT JOIN person p ON n.pid=p.pid AND n.HOSPCODE=p.HOSPCODE LEFT JOIN co_office co ON n.HOSPCODE=co.off_id WHERE  p.CID='$strCID' AND p.typearea In('1','3') ORDER BY n.DATE_SERV DESC";
+            $rs_ncdscreen=mysql_query($query_ncdscreen);
+            while ($row_ncdscreen=mysql_fetch_assoc($rs_ncdscreen))
+            {
+                $rows=$row_ncdscreen;
+            }
+              mysql_free_result($rs_ncdscreen);
+              header('Content-type: application/json');
+              return json_encode($rows);  
+        }
+    }
 
-
-
-    /*
-    function chronic($strUsername,$strPassword,$strDatatype,$strCID)
+/*
+function ncdscreen($strUsername,$strPassword,$strDatatype,$strCID)
     {
       global $database_hdc,$hdc;
       $_return='Error incorrect username or password';
@@ -473,31 +497,27 @@ function chronic($strUsername,$strPassword,$strDatatype,$strCID)
       $a_return=array();
       if ($user_level>0){
         mysql_select_db($database_hdc,$hdc);
-        $query_chronic="SELECT  co.off_name,cc.tchronic from person p
-          INNER JOIN chronic c on p.pid=c.pid and p.HOSPCODE=c.hospcode
-          INNER JOIN cchronic cc ON c.CHRONIC = cc.id_chronic
-          LEFT JOIN co_office co on co.off_id=c.HOSPCODE
-          where p.cid='$strCID'
-          GROUP BY c.HOSPCODE, c.PID, cc.tchronic";
-        $rs_chronic=mysql_query($query_chronic);
-        while ($row_chronic=mysql_fetch_assoc($rs_chronic)){
-          array_push($a_return,$row_chronic);
+        $query_ncdscreen="SELECT p.cid,n.DATE_SERV,n.HOSPCODE,co.off_name,n.WEIGHT,n.HEIGHT,n.SBP_1,n.DBP_1,n.BSLEVEL FROM ncdscreen n  LEFT JOIN person p ON n.pid=p.pid AND n.HOSPCODE=p.HOSPCODE LEFT JOIN co_office co ON n.HOSPCODE=co.off_id WHERE  p.CID='$strCID' AND p.typearea In('1','3') ORDER BY n.DATE_SERV DESC";
+        $rs_ncdscreen=mysql_query($query_ncdscreen);
+        while ($row_ncdscreen=mysql_fetch_assoc($rs_ncdscreen)){
+          array_push($a_return,$row_ncdscreen);
         }
         if (count($a_return)>0){
           $_return=json_encode($a_return);
         }else{
-          if ($rs_chronic){
-            $_return="No data<br>".$query_chronic;
+          if ($rs_ncdscreen){
+            $_return="No data<br>".$query_ncdscreen;
           }else{
-            $_return="Query Error<br>".$query_chronic;
+            $_return="Query Error<br>".$query_ncdscreen;
           }
         }
-        mysql_free_result($rs_chronic);
+        mysql_free_result($rs_ncdscreen);
       }
       //      return $_return;
       return (strtolower($strDatatype)=="json")?json_encode($a_return):arrayToXML($a_return);
     }
-    */
+
+*/
 
 
 
