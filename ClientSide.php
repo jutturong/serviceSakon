@@ -144,6 +144,36 @@
   echo $data9;
 
 
+  /*
+ประวัติคัดกรอง
+http://203.157.177.121/nusoap/testClientJSON.php?
+function=ncdscreen
+&strDatatype=json
+&strCID=3470300302631
+
+        #function ncdscreen($strUsername,$strPassword,$strDatatype,$strCID)
+        $ncdscreen_varname = array(
+                   'strUsername' => "xsd:string",
+                   'strPassword' => "xsd:string",
+                   'strDatatype'=>"xsd:string",
+                   'strCID' => "xsd:string"
+        );
+
+
+  */
+
+      $ncdscreen_varname = array(
+                  'strUsername' => "ict",
+                  'strPassword' => "skko",
+                  'strDatatype'=>"json",
+                  'strCID'=>"3470300302631", 
+        );
+   echo "<hr>";
+   echo  "ประวัติคัดกรอง";
+   echo "<br>";
+  $data10=$client->call("chronic",$ncdscreen_varname);  
+  echo $data10;
+
 
 
 ?>
