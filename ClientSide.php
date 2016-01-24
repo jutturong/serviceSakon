@@ -171,7 +171,7 @@ function=ncdscreen
    echo "<hr>";
    echo  "ประวัติคัดกรอง";
    echo "<br>";
-  $data10=$client->call("chronic",$ncdscreen_varname);  
+  $data10=$client->call("ncdscreen",$ncdscreen_varname);  
   echo $data10;
 
 
